@@ -1,4 +1,6 @@
 # Senior-Project: Create ATX
+Reuploaded from bitbucket
+
 My senior year software project - designed to offer local art resources to Austin artists in one location. Includes map services to locate local resources, helpful articles of different categories, ability for a user to create articles to share, and view and sort articles. 
 
 ## Project Abstract
