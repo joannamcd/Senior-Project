@@ -1,0 +1,279 @@
+<HTML>
+    <title>Austin Art Map</title>
+    <head>
+        <title>Austin Art Map</title>
+        <link rel="stylesheet" href="createatxstyles.css">
+        <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+        <style>
+            body { margin: 0; padding: 0; }
+            #map { position: absolute; top: 100px; left: 100px; bottom:0; width: 100%;}
+            </style>
+    </head>
+    <body>
+
+    <style>
+        #menu {
+            background: #fff;
+            position: absolute;
+            z-index: 1;
+            top: 110px;
+            left: 110px;
+            border-radius: 3px;
+            width: 120px;
+            border: 1px solid rgba(0, 0, 0, 0,4);
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        #menu a {
+            font-size: 13px;
+            color: #404040;
+            display: block;
+            margin: 0;
+            padding: 0;
+            padding: 10px;
+            text-decoration: none;
+            border-bottom: 1 px solid rgba (0, 0, 0, 0.25);
+            text-align: center;
+        }
+
+        #menu a:last-child{
+            border: none;
+        }
+        
+        #menu a:hover{
+            background-color: #f8f8f8;
+            color: #404040;
+        }
+        #menu a.active{
+            background-color: #3887be;
+            color: #ffffff;
+        }
+        #menu a.active:hover{
+            background: #3074a4;
+        }
+    </style>
+
+<nav class="navbar">
+    <div class="logo">CreateATX</div>
+<ul class="nav-links">
+
+    <div class="menu">
+    <li><a href="/">Home</a></li>
+    <li class="services">Articles
+    <ul class="dropdown">
+        <li><a href="/createArticle.html">Create an Article</a></li>
+        <li><a href="/pagesPrev.html">View Articles</a></li>
+    </ul></li>
+    <li><a href="/colorGen.html">Color Palettes</a></li>
+    <li><a href="/mapPage.html">Art in Austin</a></li>
+</div>
+</ul>
+</nav>
+
+
+
+
+
+        <nav id="menu"></nav>
+        <div class="container">
+        <div id='map' style='width: 800px; height: 600px;'></div>
+        </div>
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hbm5hbWNkIiwiYSI6ImNsYWg3dzl3czA0N3Uzd3BxdGhnejY1a2kifQ.H_Rx3Cd4gJX-Mq-7NcV0fg';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/joannamcd/clafxplwl007m14q9hjtkhnr5',
+    center: [-97.732, 30.282],
+    zoom: 10
+  });
+  
+  map.addControl(new mapboxgl.NavigationControl());
+            //mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hbm5hbWNkIiwiYSI6ImNsYWg3dzl3czA0N3Uzd3BxdGhnejY1a2kifQ.H_Rx3Cd4gJX-Mq-7NcV0fg';
+            //const map = new mapboxgl.Map({
+                //container: 'map',
+                //style: 'mapbox://styles/joannamcd/clafxplwl007m14q9hjtkhnr5',
+                //center: [30.292,-97.738],
+                //zoom: 9
+            //});
+
+            //map.addControl(new mapboxgl.NavigationControl());
+
+            
+/* map.on('load', () => {
+    map.addSource('art-galleries', {
+        type: 'vector',
+        url: 'https://studio.mapbox.com/tilesets/joannamcd.clb2w7oev06nn21nt16e3esy1-58kx8'
+    });
+
+    map.addSource('art-classes', {
+        type: 'vector',
+        url: 'https://studio.mapbox.com/tilesets/joannamcd.clafzh4fz1dlk20nvde2l8myv-152eh'
+    });
+
+    map.addLayer({
+        'id': 'art-galleries',
+        'type': 'circle',
+        'source': 'art-galleries',
+        'layout':{
+            'visibility': 'visible'
+        },
+        'paint': {
+            'circle-radius' : 10,
+            'circle-color': 'rgba(255,20,165,100)'
+        },
+        'source-layer': 'Art_Galleries'
+    });
+
+    map.addLayer({
+        'id': 'art-classes',
+        'type': 'circle',
+        'source': 'art-classes',
+        'layout':{
+            'visibility': 'visible'
+        },
+        'paint': {
+            'circle-radius' : 10,
+            'circle-color': 'rgba(33,84,237,100)'
+        },
+        'source-layer': 'Art_Classes'
+    });
+});
+*/
+map.on('load', () => { 
+
+   // if(!map.getLayer('art-galleries') || !map.getLayer('art-classes')){
+     //   return;
+   // }
+    
+    map.on('click', 'art-classes', (e) => {
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        const classAddress = e.features[0].properties.place_name;
+        const className = e.features[0].properties.place_address;
+        const classWebsite = e.features[0].properties.website_link;
+
+        while(Math.abs(e.lngLat.lng - coordinates[0]) > 180){
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(`<p>${className}</p><br>
+                <a href="${classWebsite}" target="_blank">${classWebsite}</a><br>
+                <p>${classAddress}</p>`)
+            .addTo(map);
+    });
+
+    map.on('click', 'art-galleries', (e) => {
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        const galleryAddress = e.features[0].properties.place_name;
+        const galleryName = e.features[0].properties.address;
+        const galleryWebsite = e.features[0].properties.website;
+
+        while(Math.abs(e.lngLat.lng - coordinates[0]) > 180){
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(`<p>${galleryName}</p><br>
+                <a href="${galleryWebsite}" target="_blank">${galleryWebsite}</a><br>
+                <p>${galleryAddress}</p>`)
+            .addTo(map);
+    });
+
+    map.on('click', 'art-supplies', (e) => {
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        const sAddress = e.features[0].properties.place_name;
+        const sName = e.features[0].properties.address;
+        const sWebsite = e.features[0].properties.website;
+
+        while(Math.abs(e.lngLat.lng - coordinates[0]) > 180){
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(`<p>${sAddress}</p><br>
+                <a href="${sWebsite}" target="_blank">${sWebsite}</a><br>
+                <p>${sAddress}</p>`)
+            .addTo(map);
+    });
+
+    map.on('mouseenter', 'art-classes', () => {
+        map.getCanvas().style.cursor = 'pointer';
+    })
+    
+    map.on('mouseleave', 'art-classes', () => {
+        map.getCanvas().style.cursor = '';
+    })
+
+    map.on('mouseenter', 'art-galleries', () => {
+        map.getCanvas().style.cursor = 'pointer';
+    })
+
+        
+    map.on('mouseleave', 'art-galleries', () => {
+        map.getCanvas().style.cursor = '';
+    })
+
+    map.on('mouseenter', 'art-supplies', () => {
+        map.getCanvas().style.cursor = 'pointer';
+    })
+    
+    map.on('mouseleave', 'art-supplies', () => {
+        map.getCanvas().style.cursor = '';
+    })
+
+    const toggleableLayerIds = ['art-galleries', 'art-classes', 'art-supplies'];
+    
+    for(const id of toggleableLayerIds) { 
+        if(document.getElementById(id)){
+            continue;
+        }
+    //create a link
+    const link = document.createElement('a');
+    link.id = id;
+    link.href = '#';
+    link.textContent = id;
+    link.className = 'active';
+
+    //show or hide when toggle clicked
+
+
+    window.onload = myFunction();
+
+    function myFunction(){    
+    link.onclick = function(e){
+        const clickedLayer = this.id;
+        e.preventDefault();
+        e.stopPropagation();
+
+        const visibility = map.getLayoutProperty(
+            clickedLayer,
+            'visibility'
+        );
+
+        if(visibility === 'visible' || visibility === undefined){
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.classname ='';
+        }
+        else{
+            this.classname ='active';
+            map.setLayoutProperty(
+                clickedLayer,
+                'visibility',
+                'visible'
+            );
+        }
+    };
+}
+
+
+    const layers = document.getElementById('menu');
+    layers.appendChild(link);
+}
+}); 
+        </script>
+    </body>
+</HTML>

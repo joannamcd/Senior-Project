@@ -1,0 +1,125 @@
+<HTML>
+    <title>CreateATX
+    </title>
+    <head>
+        <link rel="stylesheet" href="createatxstyles.css">
+    </head>
+    <body>
+        <style>
+            #headerImage{
+                flex: 1;
+                overflow: hidden;
+                margin-right: 1rem;
+                margin-left: 1rem;
+                height: 400px;
+                object-fit: cover;
+                border-radius: 25px;
+                
+            }
+
+            #imgBox {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+            }
+
+
+
+            #buyBox {
+                
+                display: flex;
+                width: 800px;
+                margin: 0px auto;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            #purchaseImage {
+                flex: 1;
+                border-radius: 25px;
+            }
+
+            #buyButton {
+                flex: 0;
+                flex-basis: auto;
+                background-color: crimson;
+                border-radius: 10px;
+                color: white;
+                padding: 15 px 32 px;
+                text-align: center;
+                display: inline-block;
+                font-size: 16px;
+                width: 100px;
+            }
+
+            #buyTitle {
+                flex: 1;
+            }
+
+            #buyText {
+                flex: 1;
+            }
+
+            .break {
+                flex-basis: 100%;
+                height: 0;
+            }
+        </style>
+        <nav class="navbar">
+            <div class="logo">CreateATX</div>
+        <ul class="nav-links">
+
+            <div class="menu">
+            <li><a href="/">Home</a></li>
+            <li class="services"><a href="LINK">Articles</a>
+            <ul class="dropdown">
+                <li><a href="/createArticle.html">Create an Article</a></li>
+                <li><a href="/artMediums.html">Art Mediums</a></li>
+                <li><a href="LINK">Art Styles</a></li>
+                <li><a href="LINK">Art Techniques</a></li>
+            </ul></li>
+            <li><a href="/mapPage.html">Art in Austin</a></li>
+        </div>
+        </ul>
+    </nav>
+        <h1>
+            Watercolor
+        </h1>
+        <h2>
+            Article by: Joanna McDonald &#x2713; 
+        </h2>
+        
+        <h3>Date Posted: 11/20/2022</h3>
+        <div id = "imgBox">
+        <img src="https://artincontext.org/wp-content/uploads/2021/10/Watercolor-Paintings-Tips.jpg" id="headerImage" alt="image of watercolor painting supplies"> <br>
+        </div>
+        <br>
+        <br>
+        <div id="articletext">
+            <p>Watercolor is a water-based medium applied by brush. 
+                The paint itself can come in a solid form, called "pans," or in tubes of thickened paint. 
+                When water is added to either form, the paint is activated. 
+                Because the water thins the paint, watercolor can be applied layer by layer to gradually add details and dimension to the image. 
+                The paper that is usually best suited for watercolor is a white, textured paper. The texture helps to absorb the light layers of paint, and the white paper helps the colors shine through.</p>
+        </div>
+        <br><br>
+
+        <h2>Get started with watercolor supplies near you: </h2>
+        <br>
+
+        <div id="buyBox">
+            <img src= "https://jerrysartarama.resultspage.com/thumb.php?s=350&aspect=true&f=https%3a%2f%2fwww.jerrysartarama.com%2fmedia%2fcatalog%2fproduct%2fs%2fo%2fsoho-ez-lift-artist-watercolor-set-36-main-w-logo.jpg" id="purchaseImage" alt="image of watercolor supplies to purchase">
+            <h3 id="buyTitle">Jerry's Artarama: </h3>
+            <p id="buyText"> SoHo E-Z Lift Artist Watercolors Pan Sets <br> Price Starting At: $24.99</p>
+            <div class="break"></div>
+            <button onclick="window.location.href='https://www.jerrysartarama.com/e-z-lift-artist-watercolors';" id="buyButton">Buy Now</button>
+        </div>
+
+
+        <br><br>
+    </body>
+</HTML>

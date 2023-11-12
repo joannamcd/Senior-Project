@@ -1,0 +1,225 @@
+<HTML>
+    <title>CreateATX
+    </title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="createatxstyles.css">
+        <style>
+            .color-title {
+                font-size: 32px;
+            }
+            #headerImage{
+                flex: 1;
+                overflow: hidden;
+                margin-right: 1rem;
+                margin-left: 1rem;
+                height: 400px;
+                object-fit: cover;
+                border-radius: 25px;
+                
+            }
+
+            #imgBox {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+            }
+
+
+
+            #buyBox {
+                
+                display: flex;
+                width: 800px;
+                margin: 0px auto;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            #purchaseImage {
+                flex: 1;
+                border-radius: 25px;
+            }
+
+            #buyButton {
+                flex: 0;
+                flex-basis: auto;
+                background-color: crimson;
+                border-radius: 10px;
+                color: white;
+                padding: 15 px 32 px;
+                text-align: center;
+                display: inline-block;
+                font-size: 16px;
+                width: 100px;
+            }
+
+            #buyTitle {
+                flex: 1;
+            }
+
+            #buyText {
+                flex: 1;
+            }
+
+            .break {
+                flex-basis: 100%;
+                height: 0;
+            }
+            @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap');
+            * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia';
+            }
+
+            .container {
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            }
+            .container .color {
+            margin: 12px;
+            padding: 7px;
+            list-style: none;
+            cursor: pointer;
+            text-align: center;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(52,87,220,0.08);
+            transition: all 0.3s ease;
+            }
+            .container .color:active {
+            transform: scale(0.95);
+            }
+            .color .rect-box {
+            width: 185px;
+            height: 188px;
+            border-radius: 4px;
+            }
+            .color:hover .rect-box {
+            filter: brightness(107%);
+            }
+            .color .hex-value {
+            display: block;
+            color: #444;
+            user-select: none;
+            font-weight: 500;
+            font-size: 1.15rem;
+            margin: 12px 0 8px;
+            text-transform: uppercase;
+            }
+            .refresh-btn {
+            position: fixed;
+            left: 50%;
+            bottom: 40px;
+            color: #fff;
+            cursor: pointer;
+            outline: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            background: #8A6CFF;
+            padding: 13px 20px;
+            border: 2px solid #fff;
+            transform: translateX(-50%);
+            box-shadow: 0 15px 30px rgba(52,87,220,0.2);
+            transition: all 0.3s ease;
+            }
+            .refresh-btn:hover {
+            background: #704dff;
+            }
+            @media screen and (max-width: 500px) {
+            .container {
+                margin: 10px;
+            }
+            .container .color {
+                margin: 8px;
+                padding: 5px;
+                width: calc(100% / 2 - 20px);
+            }
+            .color .rect-box {
+                width: 100%;
+                height: 148px;
+            }
+            .color .hex-value {
+                font-size: 1.05rem;
+            }
+            .refresh-btn {
+                font-size: 1rem;
+            }
+            
+            }
+            
+        </style>
+    </head>
+    <body>
+        
+        <nav class="navbar">
+            <div class="logo">CreateATX</div>
+        <ul class="nav-links">
+
+            <div class="menu">
+            <li><a href="/">Home</a></li>
+            <li class="services">Articles
+            <ul class="dropdown">
+                <li><a href="/createArticle.html">Create an Article</a></li>
+                <li><a href="/pagesPrev.html">View Articles</a></li>
+            </ul></li>
+            <li><a href="/colorGen.html">Color Palettes</a></li>
+            <li><a href="/mapPage.html">Art in Austin</a></li>
+        </div>
+        </ul>
+    </nav>
+    <br>
+    <p class="color-title">Color Palette Generator</p>
+        <ul class="container"></ul>
+        <button class="refresh-btn">Refresh Palette</button>
+
+    </body>
+
+    <script>
+        const container = document.querySelector(".container");
+        const refreshBtn = document.querySelector(".refresh-btn");
+
+        const maxPaletteBoxes = 10;
+
+        const generatePalette = () => {
+            container.innerHTML = ""; // clearing the container
+            for (let i = 0; i < maxPaletteBoxes; i++) {
+                // generating a random hex color code
+                let randomHex = Math.floor(Math.random() * 0xffffff).toString(16);
+                randomHex = `#${randomHex.padStart(6, "0")}`;
+                
+                // creating a new 'li' element and inserting it to the container
+                const color = document.createElement("li");
+                color.classList.add("color");
+                color.innerHTML = `<div class="rect-box" style="background: ${randomHex}"></div>
+                                <span class="hex-value">${randomHex}</span>`;
+                // adding click event to current li element to copy the color
+                color.addEventListener("click", () => copyColor(color, randomHex));
+                container.appendChild(color);
+            }
+        }
+        generatePalette();
+
+        const copyColor = (elem, hexVal) => {
+            const colorElement = elem.querySelector(".hex-value");
+            // Copying the hex value, updating the text to copied, 
+            // and changing text back to original hex value after 1 second
+            navigator.clipboard.writeText(hexVal).then(() => {
+                colorElement.innerText = "Copied";
+                setTimeout(() => colorElement.innerText = hexVal, 1000);
+            }).catch(() => alert("Failed to copy the color code!")); // showing alert if color can't be copied
+        }
+
+        refreshBtn.addEventListener("click", generatePalette);
+    </script>
+</HTML>

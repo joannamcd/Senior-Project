@@ -1,0 +1,202 @@
+<HTML>
+    <title>CreateATX
+    </title>
+    <head>
+        <link rel="stylesheet" href="createatxstyles.css">
+        <style>
+            #myTable, th, td{
+                margin-left: auto;
+                margin-right: auto;
+                border: 1px solid rgb(0, 0, 0);
+                border-radius: 10px;
+                font-size: 20px;
+            }
+            th,td{
+                background-color: white;
+            }
+            #table{
+                background-color: rgb(0, 174, 177);
+            }
+            #tableImg{
+                border-radius: 10px;
+            }
+            #recentTable{
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #articleFull{
+                font-size:20px;
+            }
+            #table1, #table2, #table3, #table4{
+                background-color:rgb(0, 212, 215);
+            }
+            img{
+                border-radius: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="logo">CreateATX</div>
+        <ul class="nav-links">
+
+            <div class="menu">
+            <li><a href="/">Home</a></li>
+            <li class="services">Articles
+            <ul class="dropdown">
+                <li><a href="/createArticle.html">Create an Article</a></li>
+                <li><a href="/pagesPrev.html">View Articles</a></li>
+            </ul></li>
+            <li><a href="/colorGen.html">Color Palettes</a></li>
+            <li><a href="/mapPage.html">Art in Austin</a></li>
+        </div>
+        </ul>
+    </nav>
+    <br><h1>Welcome to CreateATX!</h1><br>
+    <hr>
+    <br>
+    <h2>GET STARTED! Find art near you in Austin: classes, supplies, museums, and galleries.</h2>
+    <br><h2>View and create articles about your favorite artistic mediums, techniques, and styles.</h2><br>
+    <hr>
+    
+    <div id="table">
+        <br>
+    <table id="myTable">
+        <tr>
+            
+            <td><a href="/mapPage.html">Use the Art in Austin feature to see a map of local galleries, classes, and supply stores.</a></td>
+            <td><a href="/mapPage.html"><img src="https://i.imgur.com/wWK7iTZ.png" height="250px" width = auto ></a></td>
+        
+        </tr>
+        <tr>
+            <td><a href = "/colorGen.html">Need Inspiration? Generate a random color palette to use in your next project.</a></td>
+            <td><a href = "/colorGen.html"><img src="https://i.imgur.com/bzBrm2k.png" id="tableImg" height="250px" width = auto ></a></td>
+            </a>
+        </tr>
+        </table>
+        <br>
+    </div>
+
+        <div id="articleintro"><br>
+            <p>Recently Added Articles</p>
+            <hr>
+            <a href="/pagesPrev.html" id="articleFull">View Full Articles</a>
+            
+            <table id="recentTable">
+                <tr>
+                    <td id="table1"></td>
+                    <td id="table2"></td>
+                    <td id="table3"></td>
+                    <td id="table4"></td>
+                </tr>
+            </table>
+        <br>
+        </div>
+        
+       <!----- <p id="scriptTest">hi</p>
+    
+        <script src="homepagejavascript.js">
+            //let example = "Hi I am Joanna";
+            //let test = document.getElementById("scriptTest");
+            //test.innerHTML = example;
+            //document.getElementById("scriptTest").innerHTML = example; 
+        </script> -->
+
+    </body>
+    <script>
+        window.onload = newListings();
+        function newListings() {
+            let url = "";
+
+            url = "http://165.22.183.12/techData";
+            
+
+            
+            //var info = {
+            // "albumName": "Abbey Road"}
+            
+            
+            var info = '{ "employees" : [' +
+            '{ "firstName":"John" , "lastName":"Doe" },' +
+            '{ "firstName":"Anna" , "lastName":"Smith" },' +
+            '{ "firstName":"Peter" , "lastName":"Jones" } ]}';
+        
+            const params = {
+                headers: {
+                "content-type": "application/json; charset=UTF-8",
+                },
+                body: info,
+                method: "POST",
+            };
+        
+            fetch(url, params)
+                .then((data) => {
+                    return data.json();
+            })
+            .then((result) => {
+                //console.log(result);
+                loginResponse = result.data;
+                console.log("login Response");
+                console.log(loginResponse);
+                
+                var v1 = document.getElementById("medium");
+                var v2 = document.getElementById("techniques");
+                var v3 = document.getElementById("styles");
+            
+                
+                
+                // below here should work...
+                var localName2 = "";
+                var localName3 = "";
+                var articleTitle ="";
+                var articleURL = "";
+                var articleAuthor = "";
+                var articleText = "";
+                var article = "";
+                
+
+                var tableData1 = "";
+                var tableData2 = "";
+                var tableData3 = "";
+                var tableData4 = ""; 
+
+                tableData1 = tableData1 + "<br>" + '<section>' + "<a href='/pagesPrev.html'>" + '<div id = "image1">' + "</div>" + '<span id = "title">' + loginResponse[0][1] + '</span>' + "<br>" + '<span id = "author">' + "By: " + loginResponse[0][2] + "</span>" + "</a>" + "</section>";
+                document.getElementById("table1").innerHTML = tableData1;
+                var img1 = document.createElement('img');
+                img1.src = loginResponse[0][8];
+                document.getElementById("image1").appendChild(img1);
+                img1.style.width = '200px';
+                img1.style.height = '200px';
+
+
+                tableData2 = tableData2 + "<br>" + '<section>' + "<a href='/pagesPrev.html'>" +  '<div id = "image2">' + "</div>" + '<span id = "title">' + loginResponse[1][1] + '</span>' + "<br>" + '<span id = "author">' + "By: " + loginResponse[1][2] + "</span>" + "</a>" + "</section>";
+                document.getElementById("table2").innerHTML = tableData2;
+                var img2 = document.createElement('img');
+                img2.src = loginResponse[1][8];
+                document.getElementById("image2").appendChild(img2);
+                img2.style.width = '200px';
+                img2.style.height = '200px';
+                //self, article_title, author_username, author_verification, article_text_path, article_type, article_texts, article_img
+                
+                tableData3 = tableData3 + "<br>" + '<section>' + "<a href='/pagesPrev.html'>" +  '<div id = "image3">' + "</div>" + '<span id = "title">' + loginResponse[2][1] + '</span>' + "<br>" + '<span id = "author">' + "By: " + loginResponse[2][2] + "</span>" + "</a>" + "</section>";
+                document.getElementById("table3").innerHTML = tableData3;
+                var img3 = document.createElement('img');
+                img3.src = loginResponse[2][8];
+                document.getElementById("image3").appendChild(img3);
+                img3.style.width = '200px';
+                img3.style.height = '200px';
+                    
+                tableData4 = tableData4 + "<br>" + '<section>' + "<a href='/pagesPrev.html'>" +  '<div id = "image4">' + "</div>" + '<span id = "title">' + loginResponse[3][1] + '</span>' + "<br>" + '<span id = "author">' + "By: " + loginResponse[3][2] + "</span>" + "</a>" + "</section>";
+                document.getElementById("table4").innerHTML = tableData4;
+                var img4 = document.createElement('img');
+                img4.src = loginResponse[3][8];
+                document.getElementById("image4").appendChild(img4);
+                img4.style.width = '200px';
+                img4.style.height = '200px';
+            })
+            
+            .catch((error) => console.log(error));
+        
+        }  
+    </script>
+</HTML>

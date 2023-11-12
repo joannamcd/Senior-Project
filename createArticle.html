@@ -1,0 +1,201 @@
+<HTML>
+    <title>CreateATX
+    </title>
+    <head>
+        <link rel="stylesheet" href="/createatxstyles.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            h2{
+                color:teal;
+            }
+            button{
+                font-size: 20px;
+                border-radius:8px;
+                border: 2px solid rgb(0, 167, 167);
+                background-color: rgb(157, 252, 128);
+                transition-duration: 0.4s;
+                width: 15%;
+            }
+            button:hover{
+                background-color: rgb(101, 252, 154);
+            }
+            input[type=text], select, input[type=url]{
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            h2{
+                color:teal;
+                font-size: 40px;
+            }
+            #container {
+                width: 95%;
+                font-size: 17px;
+                margin: 0 auto;
+                border-radius: 20px;
+                background-color: rgb(217, 249, 208);
+                padding: 20px;
+                }
+            textarea{
+                width: 60%;
+                text-align: left;
+            }
+
+            input[type=text], input[type=url] {
+                text-align: left;
+                width: 50%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            select{
+                width: 30%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="logo">CreateATX</div>
+        <ul class="nav-links">
+
+            <div class="menu">
+            <li><a href="/">Home</a></li>
+            <li class="services">Articles
+            <ul class="dropdown">
+                <li><a href="/createArticle.html">Create an Article</a></li>
+                <li><a href="/pagesPrev.html">View Articles</a></li>
+            </ul></li>
+            <li><a href="/colorGen.html">Color Palettes</a></li>
+            <li><a href="/mapPage.html">Art in Austin</a></li>
+        </div>
+        </ul>
+    </nav>
+    <br>
+    <section class ="order-form">
+    <div class="form">
+    <h2>Create an Article</h2>
+    <hr><br>
+        <div id="container">
+        <form name="articleForm" id="form">
+           
+            <div class="title">
+            <label>Article Title:</lable><br>
+            <input type="text" id="title" name="title" required><br>
+           </div>
+           <br>
+           <!---
+            <label for="title">Article Title:</label><br>
+            <input type="text" id="title" name="title"><br>
+           --> 
+
+           <div class="username">
+            <label>Author Name: </label><br>
+            <input type="text" id="username" name="username" required><br>
+           </div>
+           <br>
+            <!-- <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username"><br>
+            -->
+
+            <div class="veri">
+                <label>Verified User:</label><br>
+                <input type="checkbox" id="veri" name="veri" ><br>
+            </div>
+            <br>
+            <!-- <label for="veri">Verified User:</label><br>
+            <input type="checkbox" id="veri" name="veri"><br>
+            -->
+
+            <div class="texts">
+                <label>Article Content:</label><br>
+                <textarea id="texts" name="texts" rows="7" cols="33" required></textarea><br>
+            </div>
+            <br>
+            <!--<label for="texts">Article Content:</label><br>
+            <textarea id="texts" name="texts" rows="7" cols="33"></textarea><br>
+            <input type="text" id="texts" name="texts" style="width:400px;"><br> -->
+            
+            <div class="atype">
+                <label>Which type of article is this?</label>
+                <select name="atype" id="atype" required>
+                    <option value="" selected="selected">Select an Article Type</option>
+                    <option value="medium">Art Medium</option>
+                    <option value="techniques">Art Techniques</option>
+                    <option value="styles">Art Styles</option>
+                </select>
+
+            </div>
+            <br>
+            <!--
+            <p>Which type of article is this?</p>
+
+            <input type="radio" id="medium" name="atype" value="Art Medium">
+            <label for="medium">Art Medium</label><br>
+            <input type="radio" id="techniques" name="atype" value="Art Techniques">
+            <label for="techniques">Art Techniques</label><br>
+            <input type="radio" id="styles" name="atype" value="Art Styles">
+            <label for="styles">Art Styles</label><br>
+        -->
+        <div class="myFile" id="display-image">
+            <label for="myFile">Image URL: </label>
+            <input type="url" id="myFile" name="myFile" onchange="previewImage()" required><br>
+            <img id="preview" style="width: 200px; height: auto;">
+           <!-- <input type="file" id="myFile" name="filename" accept="image/png, image/jpeg" onchange="previewImage()" required><br> --->
+        </div>   
+        <br>
+        <div class="button">
+            <button type="submit" id="btn btn-primary" class="btn btn-primary">Submit</button>
+        </div>
+        </form>
+    </div>
+    </div>
+</section>
+        <script type="text/javascript" src="articleJS.js"></script>
+
+        <script>
+            function formFunction(){
+                const title = document.getElementById("title").value;
+                const username = document.getElementById("username").value;
+                const veri = document.getElementById("veri").value;
+                const date = document.getElementById("date").value;
+                const texts = document.getElementById("texts").value;
+                const atype = document.getElementsByName("atype").value;
+
+                const dict_values = {title, username, veri, date, atype, texts}
+                const s = JSON.stringify(dict_values);
+                console.log(s);
+                window.alert(s)
+                var formData = JSON.stringify(s);
+
+                var xmlhttp = new XMLHttpRequest();
+                var url = "/test";
+                xmlhttp.open("POST", url);
+                xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xmlhttp.send(formData);
+                //$.ajax({
+                    //url:'/test',
+                    //type:"POST",
+                    //contentType: "application/json",
+                    //data: JSON.stringify(s)
+                //}); 
+            }
+        </script>
+
+    </body>
+</HTML>
